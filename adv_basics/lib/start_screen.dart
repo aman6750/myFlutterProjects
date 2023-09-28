@@ -16,13 +16,6 @@ class StartScreen extends StatelessWidget {
             width: 300,
             color: const Color.fromARGB(140, 255, 255, 255),
           ),
-          // Opacity(
-          //   opacity: 0.5,
-          //   child: Image.asset(
-          //     'assets/images/quiz-logo.png',
-          //     width : 300,
-          //   ),
-          // ),
           const SizedBox(height: 30),
           const Text(
             'Learn flutter in the fun way !',
