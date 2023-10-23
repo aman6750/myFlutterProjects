@@ -11,9 +11,7 @@ class Expenses extends StatefulWidget {
   State<Expenses> createState() {
     return _ExpensesState();
   }
-
 }
-
 
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
@@ -33,14 +31,24 @@ class _ExpensesState extends State<Expenses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('flutter Expense Tracker'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          )
+        ],
+      ),
       body: Column(
-        children:[
+        children: [
+          // toolbar with the add button => Row()
           const Text('Expense Tracker chart'),
-          ExpensesList(expenses: _registeredExpenses)
+          Expanded(
+            child: ExpensesList(expenses: _registeredExpenses),
+          ),
         ],
       ),
     );
   }
-
-
 }
