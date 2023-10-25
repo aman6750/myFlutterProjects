@@ -16,4 +16,7 @@ class ExpensesList extends StatelessWidget {
       itemBuilder: (ctx, index) => Text(expenses[index].title),
     );
   }
+
+  
+
 }
