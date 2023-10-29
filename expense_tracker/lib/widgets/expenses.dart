@@ -1,5 +1,3 @@
-// ignore_for_file: unused_field
-
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
@@ -20,13 +18,13 @@ class _ExpensesState extends State<Expenses> {
       title: 'Flutter Course',
       amount: 19.9,
       date: DateTime.now(),
-      category: Categori.work,
+      category: Category.work,
     ),
     Expense(
       title: "Cinema",
       amount: 25.0,
       date: DateTime.now(),
-      category: Categori.leisure,
+      category: Category.leisure,
     ),
   ];
 
@@ -46,8 +44,26 @@ class _ExpensesState extends State<Expenses> {
     });
   }
 
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(seconds: 3), content: Text('Expense Deleted'),));
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('No expenses found. Start adding some!'),
+    );
+
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        expenses: _registeredExpenses,
+        onRemoveExpense: _removeExpense,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('flutter Expense Tracker'),
@@ -63,7 +79,10 @@ class _ExpensesState extends State<Expenses> {
           // toolbar with the add button => Row()
           const Text('Expense Tracker chart'),
           Expanded(
-            child: ExpensesList(expenses: _registeredExpenses),
+            child: ExpensesList(
+              expenses: _registeredExpenses,
+              onRemoveExpense: _removeExpense,
+            ),
           ),
         ],
       ),
