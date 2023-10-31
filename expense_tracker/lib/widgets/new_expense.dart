@@ -125,9 +125,11 @@ class _NewExpenseState extends State<NewExpense> {
                 value: _selectedCategory,
                 items: Category.values
                     .map(
-                      (category) => DropdownMenuItem(
+                      (cat) => DropdownMenuItem(
+                        value:
+                            cat, // Set the value property to match the category
                         child: Text(
-                          category.name.toUpperCase(),
+                          cat.name.toUpperCase(),
                         ),
                       ),
                     )
