@@ -13,7 +13,7 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  final List<Expense> _registeredExpenses = [
+  static final List<Expense> _registeredExpenses = [
     Expense(
       title: 'Flutter Course',
       amount: 19.9,
@@ -28,8 +28,9 @@ class _ExpensesState extends State<Expenses> {
     ),
   ];
 
-  void _openAddExpenseOverlay() {
+  void _openAddExpenseOverlay(){
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(
@@ -38,13 +39,13 @@ class _ExpensesState extends State<Expenses> {
     );
   }
 
-  void _addExpense(Expense expense) {
+  void _addExpense(Expense expense){
     setState(() {
       _registeredExpenses.add(expense);
     });
   }
 
-  void _removeExpense(Expense expense) {
+  void _removeExpense(Expense expense){
     final expenseIndex = _registeredExpenses.indexOf(expense);
     setState(() {
       _registeredExpenses.remove(expense);
@@ -67,12 +68,15 @@ class _ExpensesState extends State<Expenses> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    final width = MediaQuery.of(context).size.width;
+    print(MediaQuery.of(context).size.height);
+
     Widget mainContent = const Center(
       child: Text('No expenses found. Start adding some!'),
     );
 
-    if (_registeredExpenses.isNotEmpty) {
+    if (_registeredExpenses.isNotEmpty){
       mainContent = ExpensesList(
         expenses: _registeredExpenses,
         onRemoveExpense: _removeExpense,
@@ -89,15 +93,25 @@ class _ExpensesState extends State<Expenses> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          // toolbar with the add button => Row()
-          const Text('Expense Tracker chart'),
-          Expanded(
-            child: mainContent,
-          ),
-        ],
-      ),
+      body: width < 600
+          ? Column(
+              children: [
+                // toolbar with the add button => Row()
+                const Text('Expense Tracker chart'),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                // toolbar with the add button => Row()
+                const Text('Expense Tracker chart'),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            ),
     );
   }
 }
